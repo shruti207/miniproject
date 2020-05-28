@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <script>
+            setTimeout(function(){
+                document.getElementById('al').remove();
+            },2000)
+        </script>
+    </head>
+    <body>
+        <div class="container">
+            {% if messages %}
+                {% for msg in messages %}
+                    <div class="alert alert-success" id="al">
+                        {{msg}}
+                    </div>
+                {% endfor %}
+            {% endif %}    
+
+
+            <div style="visibility: hidden; background: green;"><h3>book added!</h3></div>   
+        <h1>My to do list</h1>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6">
+                    <form action="/todolist/" method="POST">{% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-6"><input type="text" name="content" required class="form-control" placeholder="ENTER TASK" >
+                            </div>
+                            <div class="col-md-6"><input type="submit" value="add item" class="btn btn-primary"></div>
+                        </div>
+                        </form><br>
+
+                </div>
+                <div class="col-md-6"></div>
+            </div>
+
+        </div>
+        
+                        
+        {% if list_item %}
+        <table class="table table-bordered">
+            {% for i in list_item %}
+                {% if i.completed %}
+                <tr>
+                   <td>{{i.content}}</td>
+                   <td><center><a href="http://localhost:8000/uncross/{{i.id}}">cross</a></center></td>
+                   <td><center><a href="http://localhost:8000/delete/{{i.id}}">DELETE</a></center></a></td>
+
+                </tr>
+                {% else %}
+                <tr>
+                    <td>{{i.content}}</td>
+                    <td><center><a href="http://localhost:8000/cross/{{i.id}}">uncross</a></center></td>
+                    <td><center><a href="http://localhost:8000/delete/{{i.id}}">DELETE</a></center></a></td>
+ 
+                 </tr>
+                 {% endif %}
+             {% endfor %}
+        </table>
+        {% endif %}
+         </div>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    </body>
+ </html>   
